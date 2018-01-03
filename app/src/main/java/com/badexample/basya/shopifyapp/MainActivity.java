@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -81,17 +82,37 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        shoppingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                try {
+                    JSONObject item = singleItemData(data, i);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
+
+    public JSONObject singleItemData(String s, int position) throws JSONException{
+        JSONObject jsonObject = new JSONObject(s);
+        JSONArray jsonProducts = jsonObject.getJSONArray("products");
+        JSONObject product = jsonProducts.getJSONObject(position);
+        return product;
     }
 
     public void dataRetriever(String s) throws JSONException {
 
-        JSONObject jsonObject = new JSONObject(data);
+        JSONObject jsonObject = new JSONObject(s);
         JSONArray jsonProducts = jsonObject.getJSONArray("products");
         Log.i("response56", jsonProducts.toString());
         for(int i=0; i<jsonProducts.length(); i++){
             JSONObject product = jsonProducts.getJSONObject(i);
             productNames.add(product.getString("title"));
-            productDescriptions.add(product.getString("product_type"));
+            productDescriptions.add(product.getString("body_html"));
             JSONObject image1 = product.getJSONObject("image");
             productImages.add(image1.getString("src"));
 
