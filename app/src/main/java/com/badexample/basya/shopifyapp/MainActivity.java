@@ -1,6 +1,7 @@
 package com.badexample.basya.shopifyapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -87,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
                     JSONObject item = singleItemData(data, i);
+                    Intent itemViewIntent = new Intent(MainActivity.this, OpenItemActivity.class);
+                    itemViewIntent.putExtra("JSONItem", item.toString());
+                    startActivity(itemViewIntent);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
