@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +51,7 @@ public class OpenItemActivity extends AppCompatActivity {
         productInfo = new ArrayList<>();
         itemInfoListView = (ListView) findViewById(R.id.listViewItem);
         itemImageView = (ImageView) findViewById(R.id.imageViewItem);
-        titleOfItem = (TextView) findViewById(R.id.titleTextView);
+        titleOfItem = (TextView) findViewById(R.id.titleTextViewItem);
 
         basicAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, productInfo);
         itemInfoListView.setAdapter(basicAdapter);
@@ -63,11 +65,11 @@ public class OpenItemActivity extends AppCompatActivity {
         }
 
 
+
     }
 
     public void listPopulater(String s) throws JSONException {
         JSONObject currentItem = new JSONObject(s);
-        Log.i("mcdonaldscoffee", currentItem.toString());
         Iterator<?> keys = currentItem.keys();
 
         while( keys.hasNext() ) {
@@ -76,5 +78,14 @@ public class OpenItemActivity extends AppCompatActivity {
             basicAdapter.notifyDataSetChanged();
 
         }
+        JSONObject image1 = currentItem.getJSONObject("image");
+
+
+        Glide.with(OpenItemActivity.this)
+                .load(image1.getString("src"))
+                .into(itemImageView);
+
+        titleOfItem.setText(currentItem.getString("title"));
+
     }
 }

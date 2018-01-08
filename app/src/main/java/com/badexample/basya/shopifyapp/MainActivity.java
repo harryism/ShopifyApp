@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
         JSONObject jsonObject = new JSONObject(s);
         JSONArray jsonProducts = jsonObject.getJSONArray("products");
-        Log.i("response56", jsonProducts.toString());
         for(int i=0; i<jsonProducts.length(); i++){
             JSONObject product = jsonProducts.getJSONObject(i);
             productNames.add(product.getString("title"));
@@ -140,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.i("response123", response.toString());
             String response1 = null;
             try {
                 response1 = response.body().string();
